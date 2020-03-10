@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1031500314203",
+    "firebase_url": "https://registerandloginv1.firebaseio.com",
+    "project_id": "registerandloginv1",
+    "storage_bucket": "registerandloginv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031500314203:android:66346de7ae57907bf6f17e",
+        "android_client_info": {
+          "package_name": "com.example.registerandloginv1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031500314203-mnlu7h8veneu4k4dvsdclq6fc5ena3fl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmYY5vEtpZHLyIcfGF-8YC1lu5kUpbKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031500314203-mnlu7h8veneu4k4dvsdclq6fc5ena3fl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

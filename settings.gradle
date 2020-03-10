@@ -1,0 +1,2 @@
+rootProject.name='RegisterAndLoginV1'
+include ':app'
