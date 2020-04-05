@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddDogOwner extends AppCompatActivity {
 
+
     //Declaring vars - ending in ET for edit text fields
     EditText ownerNameET, dogNameET, breedET, dogAgeET, weightET, phoneNumET;
     RadioButton radio_kg, radio_lb;
@@ -17,6 +18,7 @@ public class AddDogOwner extends AppCompatActivity {
     protected boolean kgChecked, lbChecked;
 
     private static final String TAG = "AddDog";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,63 +61,74 @@ public class AddDogOwner extends AppCompatActivity {
                 String breed = breedET.getText().toString();
                 String phoneNum = phoneNumET.getText().toString();
 
-                //try - catch for dogAge int validation
-                int dogAge;
-                try{
-                    dogAge = Integer.parseInt(String.valueOf(dogAgeET.getText()));
-                    if(!(dogAge>=0)){
-                        dogAgeET.setError("Please enter your dogs age (numeric)");
-                        dogAgeET.requestFocus();
-                    }
-                    else if(dogAge>18){
-                        dogAgeET.setError("Dogs must be under 18 years of age");
-                        dogAgeET.requestFocus();
-                    }
-                }catch (Exception e){
-                    dogAgeET.setError("error reading dog age");
-                    dogAgeET.requestFocus();
-                }
-                //try - catch for weight int input validation
-                int weight;
-                try{
+                int weight=0;
+                try {
                     weight = Integer.parseInt(String.valueOf(weightET.getText()));
-                    if(weight<=0){
+                    if (lbChecked) {
+                        weight = weight / 2;
+                    }
+                    if (weight <= 0) {
+                        weightET.setError("Please enter a valid weight");
+                        weightET.requestFocus();
+                    } else if (weight > 150) {
                         weightET.setError("Please enter a valid weight");
                         weightET.requestFocus();
                     }
-                    else if(weight>150){
-                        weightET.setError("Please enter a valid weight");
-                        weightET.requestFocus();
-                    }
-                }catch(Exception e){
+                } catch (Exception e) {
                     weightET.setError("Error reading dog weight");
                     weightET.requestFocus();
                 }
+
+                //try - catch for dogAge int validation
+
+                int dogAge=0;
+                try {
+                    dogAge = Integer.parseInt(String.valueOf(dogAgeET.getText()));
+                    if (!(dogAge >= 0)) {
+                        dogAgeET.setError("Please enter your dogs age (numeric)");
+                        dogAgeET.requestFocus();
+                    } else if (dogAge > 18) {
+                        dogAgeET.setError("Dogs must be under 18 years of age");
+                        dogAgeET.requestFocus();
+                    }
+                } catch (Exception e) {
+                    dogAgeET.setError("error reading dog age");
+                    dogAgeET.requestFocus();
+                }
+
+
+                //try - catch for weight int input validation
+
                 //Basic input validation for empty Strings
-                if(ownerName.isEmpty()){
+                if (ownerName.isEmpty()) {
                     ownerNameET.setError("Name is required");
                     ownerNameET.requestFocus();
                 }
-                if(dogName.isEmpty()){
+                if (dogName.isEmpty()) {
                     dogNameET.setError("Dog name is required");
                     dogNameET.requestFocus();
                 }
-                if(breed.isEmpty()){
+                if (breed.isEmpty()) {
                     breedET.setError("Breed is required");
                     breedET.requestFocus();
                 }
 
-                if(phoneNum.isEmpty()){
+                if (phoneNum.isEmpty()) {
                     phoneNumET.setError("A phone number is required");
                     phoneNumET.requestFocus();
                 }
-                if(phoneNum.length()!=10){
+                if (phoneNum.length() != 10) {
                     phoneNumET.setError("Must be 10 digits long");
                     phoneNumET.requestFocus();
                 }
+                MainActivity m = new MainActivity();
+
+                m.createDogOwnerUser(ownerName, dogName, breed, dogAge, weight,phoneNum);
+
 
 
             }
+
         });//end of dogSubmitBtn onclick listener
 
     }//end of onCreate

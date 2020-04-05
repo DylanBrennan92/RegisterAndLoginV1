@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".NavigationDrawer"/>
         <activity android:name=".AddDogOwner"/>
-
+        <activity android:name="AddDogWalker"/>
         <activity android:name=".accountType" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity" />

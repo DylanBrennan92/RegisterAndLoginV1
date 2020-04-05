@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String userID;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -53,15 +53,20 @@ public class MainActivity extends AppCompatActivity {
                     passwordReg.setError("Password is required");
                     passwordReg.requestFocus();
                 }
-                else if(email.isEmpty() && password.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Fields are not filled in!", Toast.LENGTH_SHORT).show();
-                }
                 //if the users inputs validate, allow them to select an account type
                 else{
-                   accountType a = new accountType();
-                   a.onCreate();
-                   a.selectAccountType();
+                    mFirebaseAuth = FirebaseAuth.getInstance();
 
+                    mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                Intent x = new Intent(MainActivity.this, accountType.class);
+                                startActivity(x);
+                            }
+                        }
+                    });
                 }//end of else
             }
         });
@@ -74,37 +79,61 @@ public class MainActivity extends AppCompatActivity {
         });
     }//end of onCreate
 
+    public void createDogOwnerUser(final String ownerName, final String dogName, final String breed, final int dogAge, final int weight, final String phoneNum){
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void createDogOwnerUser(){
-      final String email = emailReg.getText().toString();
-      String password = passwordReg.getText().toString();
-
-         mFirebaseAuth = FirebaseAuth.getInstance();
-         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if(task.isSuccessful()){
                 //Firestore cloud database below
-                userID = mFirebaseAuth.getCurrentUser().getUid();
-                DocumentReference documentReference = db.collection("users").document(userID);
-                Map<String, Object> user = new HashMap<>();
-                user.put("email", email);
-                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                Map<String, Object> dogOwner = new HashMap<>();
+                //dogOwner.put("email", email);
+                dogOwner.put("ownerName", ownerName);
+                dogOwner.put("dogName", dogName);
+                dogOwner.put("breed", breed);
+                dogOwner.put("dogAge", dogAge);
+                dogOwner.put("dogWeight", weight);
+                dogOwner.put("phoneNum", phoneNum);
+
+                db.collection("dogOwner")
+                        .add(dogOwner).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        // Log.d(TAG, "onSuccess: User profile is created for  " + userID );
+                    public void onSuccess(DocumentReference documentReference) {
+
+                        startActivity(new Intent(MainActivity.this, accountType.class));
+                        Toast.makeText(MainActivity.this, "Account with details stored in database", Toast.LENGTH_SHORT).show();
                     }
                 });
-                startActivity(new Intent(MainActivity.this, accountType.class));
-                Toast.makeText(MainActivity.this, "Account stored in database", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(MainActivity.this, "Error creating account in database", Toast.LENGTH_SHORT).show();
-            }
-        }
-    });
-
     }//end of createDogOwnerUser()
+
+    public void createDogWalkerUser(String name, String phoneNum, String location, int weight){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> dogWalker = new HashMap<>();
+        dogWalker.put("name", name);
+        dogWalker.put("phoneNum", phoneNum);
+        dogWalker.put("location", location);
+        dogWalker.put("weight", weight);
+
+
+        db.collection("dogWalker")
+                .add(dogWalker).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+
+                startActivity(new Intent(MainActivity.this, accountType.class));
+                Toast.makeText(MainActivity.this, "Account with details stored in database", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
