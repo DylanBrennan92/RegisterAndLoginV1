@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                Intent x = new Intent(MainActivity.this, accountType.class);
+                                Intent x = new Intent(MainActivity.this, AccountType.class);
                                 startActivity(x);
                             }
                         }
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 }//end of else
             }
         });
+
         goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }//end of onCreate
+
 
     public void createDogOwnerUser(final String ownerName, final String dogName, final String breed, final int dogAge, final int weight, final String phoneNum){
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -98,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
 
-                        startActivity(new Intent(MainActivity.this, accountType.class));
-                        Toast.makeText(MainActivity.this, "Account with details stored in database", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, AccountType.class));
+
                     }
                 });
     }//end of createDogOwnerUser()
@@ -114,26 +115,15 @@ public class MainActivity extends AppCompatActivity {
         dogWalker.put("location", location);
         dogWalker.put("weight", weight);
 
-
         db.collection("dogWalker")
-                .add(dogWalker).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
+                .add(dogWalker);
 
-                startActivity(new Intent(MainActivity.this, accountType.class));
-                Toast.makeText(MainActivity.this, "Account with details stored in database", Toast.LENGTH_SHORT).show();
-            }
-        });
 
+
+       // HomeActivity h = new HomeActivity();
+       // h.startCalendar();
     }
 
 
-
-
-
-
-
-
-
-
 }
+

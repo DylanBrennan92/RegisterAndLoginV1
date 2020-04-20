@@ -121,8 +121,9 @@ public class AddDogOwner extends AppCompatActivity {
                     phoneNumET.setError("Must be 10 digits long");
                     phoneNumET.requestFocus();
                 }
-                MainActivity m = new MainActivity();
 
+
+                MainActivity m = new MainActivity();
                 m.createDogOwnerUser(ownerName, dogName, breed, dogAge, weight,phoneNum);
 
 

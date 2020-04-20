@@ -19,7 +19,6 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

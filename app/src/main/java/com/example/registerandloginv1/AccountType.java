@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class accountType extends AppCompatActivity {
+public class AccountType extends AppCompatActivity {
 
     Button dogOwnerBtn, dogWalkerBtn;
 
@@ -24,8 +24,8 @@ public class accountType extends AppCompatActivity {
         dogOwnerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(accountType.this, AddDogOwner.class));
-                Toast.makeText(accountType.this, "Dog Owner selected", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(AccountType.this, AddDogOwner.class));
+                Toast.makeText(AccountType.this, "Dog Owner selected", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -34,8 +34,8 @@ public class accountType extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                startActivity(new Intent(accountType.this, AddDogWalker.class));
-                Toast.makeText(accountType.this, "Dog Walker selected", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(AccountType.this, AddDogWalker.class));
+                Toast.makeText(AccountType.this, "Dog Walker selected", Toast.LENGTH_LONG).show();
             }
 
         });

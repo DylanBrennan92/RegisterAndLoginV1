@@ -1,5 +1,6 @@
 package com.example.registerandloginv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddDogWalker extends AppCompatActivity {
 
@@ -70,8 +76,8 @@ public class AddDogWalker extends AppCompatActivity {
                 catch(Exception e){
 
                 }
-                MainActivity m = new MainActivity();
-                m.createDogWalkerUser(name, phoneNum, location, weight);
+                //MainActivity m = new MainActivity();
+               createDogWalkerUser(name, phoneNum, location, weight);
             }
 
             });
@@ -79,5 +85,24 @@ public class AddDogWalker extends AppCompatActivity {
 
     }//end of onCreate()
 
+    public void openCalender() {
+        Intent goToCal = new Intent(this, Calendar.class);
+        startActivity(goToCal);
+    }
+
+    public void createDogWalkerUser(String name, String phoneNum, String location, int weight){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> dogWalker = new HashMap<>();
+        dogWalker.put("name", name);
+        dogWalker.put("phoneNum", phoneNum);
+        dogWalker.put("location", location);
+        dogWalker.put("weight", weight);
+
+        db.collection("dogWalker")
+                .add(dogWalker);
+        openCalender();
+    }
 }
 
